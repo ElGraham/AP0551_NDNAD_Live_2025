@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>NDNAD Live — AP0551</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<!-- Inlined QR code generator (davidshimjs/qrcodejs, MIT licence) — no external dependency needed to render QR codes -->
+<script>
+var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t++]=g[j][m]);for(var m=0;e>m;m++)for(var j=0;j<b.length;j++)m<h[j].length&&(s[t++]=h[j][m]);return s};for(var c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},d={L:1,M:0,Q:3,H:2},e={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},f={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(a){for(var b=a<<10;f.getBCHDigit(b)-f.getBCHDigit(f.G15)>=0;)b^=f.G15<<f.getBCHDigit(b)-f.getBCHDigit(f.G15);return(a<<10|b)^f.G15_MASK},getBCHTypeNumber:function(a){for(var b=a<<12;f.getBCHDigit(b)-f.getBCHDigit(f.G18)>=0;)b^=f.G18<<f.getBCHDigit(b)-f.getBCHDigit(f.G18);return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getPatternPosition:function(a){return f.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case e.PATTERN000:return 0==(b+c)%2;case e.PATTERN001:return 0==b%2;case e.PATTERN010:return 0==c%3;case e.PATTERN011:return 0==(b+c)%3;case e.PATTERN100:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case e.PATTERN101:return 0==b*c%2+b*c%3;case e.PATTERN110:return 0==(b*c%2+b*c%3)%2;case e.PATTERN111:return 0==(b*c%3+(b+c)%2)%2;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){for(var b=new i([1],0),c=0;a>c;c++)b=b.multiply(new i([1,g.gexp(c)],0));return b},getLengthInBits:function(a,b){if(b>=1&&10>b)switch(a){case c.MODE_NUMBER:return 10;case c.MODE_ALPHA_NUM:return 9;case c.MODE_8BIT_BYTE:return 8;case c.MODE_KANJI:return 8;default:throw new Error("mode:"+a)}else if(27>b)switch(a){case c.MODE_NUMBER:return 12;case c.MODE_ALPHA_NUM:return 11;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 10;default:throw new Error("mode:"+a)}else{if(!(41>b))throw new Error("type:"+b);switch(a){case c.MODE_NUMBER:return 14;case c.MODE_ALPHA_NUM:return 13;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 12;default:throw new Error("mode:"+a)}}},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;b>d;d++)for(var e=0;b>e;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||d+h>=b))for(var i=-1;1>=i;i++)0>e+i||e+i>=b||(0!=h||0!=i)&&g==a.isDark(d+h,e+i)&&f++;f>5&&(c+=3+f-5)}for(var d=0;b-1>d;d++)for(var e=0;b-1>e;e++){var j=0;a.isDark(d,e)&&j++,a.isDark(d+1,e)&&j++,a.isDark(d,e+1)&&j++,a.isDark(d+1,e+1)&&j++,(0==j||4==j)&&(c+=3)}for(var d=0;b>d;d++)for(var e=0;b-6>e;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(var e=0;b>e;e++)for(var d=0;b-6>d;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(var k=0,e=0;b>e;e++)for(var d=0;b>d;d++)a.isDark(d,e)&&k++;var l=Math.abs(100*k/b/b-50)/5;return c+=10*l}},g={glog:function(a){if(1>a)throw new Error("glog("+a+")");return g.LOG_TABLE[a]},gexp:function(a){for(;0>a;)a+=255;for(;a>=256;)a-=255;return g.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)},h=0;8>h;h++)g.EXP_TABLE[h]=1<<h;for(var h=8;256>h;h++)g.EXP_TABLE[h]=g.EXP_TABLE[h-4]^g.EXP_TABLE[h-5]^g.EXP_TABLE[h-6]^g.EXP_TABLE[h-8];for(var h=0;255>h;h++)g.LOG_TABLE[g.EXP_TABLE[h]]=h;i.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=new Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=g.gexp(g.glog(this.get(c))+g.glog(a.get(d)));return new i(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;for(var b=g.glog(this.get(0))-g.glog(a.get(0)),c=new Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(var d=0;d<a.getLength();d++)c[d]^=g.gexp(g.glog(a.get(d))+b);return new i(c,0).mod(a)}},j.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],j.getRSBlocks=function(a,b){var c=j.getRsBlockTable(a,b);if(void 0==c)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;d>f;f++)for(var g=c[3*f+0],h=c[3*f+1],i=c[3*f+2],k=0;g>k;k++)e.push(new j(h,i));return e},j.getRsBlockTable=function(a,b){switch(b){case d.L:return j.RS_BLOCK_TABLE[4*(a-1)+0];case d.M:return j.RS_BLOCK_TABLE[4*(a-1)+1];case d.Q:return j.RS_BLOCK_TABLE[4*(a-1)+2];case d.H:return j.RS_BLOCK_TABLE[4*(a-1)+3];default:return void 0}},k.prototype={get:function(a){var b=Math.floor(a/8);return 1==(1&this.buffer[b]>>>7-a%8)},put:function(a,b){for(var c=0;b>c;c++)this.putBit(1==(1&a>>>b-c-1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0),a&&(this.buffer[b]|=128>>>this.length%8),this.length++}};var l=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,194],[520,412,292,220],[586,450,322,250],[644,504,364,280],[718,560,394,310],[792,624,442,338],[858,666,482,382],[929,711,509,403],[1003,779,565,439],[1091,857,611,461],[1171,911,661,511],[1273,997,715,535],[1367,1059,751,593],[1465,1125,805,625],[1528,1190,868,658],[1628,1264,908,698],[1732,1370,982,742],[1840,1452,1030,790],[1952,1538,1112,842],[2068,1628,1168,898],[2188,1722,1228,958],[2303,1809,1283,983],[2431,1911,1351,1051],[2563,1989,1423,1093],[2699,2099,1499,1139],[2809,2213,1579,1219],[2953,2331,1663,1273]],o=function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){function g(a,b){var c=document.createElementNS("http://www.w3.org/2000/svg",a);for(var d in b)b.hasOwnProperty(d)&&c.setAttribute(d,b[d]);return c}var b=this._htOption,c=this._el,d=a.getModuleCount();Math.floor(b.width/d),Math.floor(b.height/d),this.clear();var h=g("svg",{viewBox:"0 0 "+String(d)+" "+String(d),width:"100%",height:"100%",fill:b.colorLight});h.setAttributeNS("http://www.w3.org/2000/xmlns/","xmlns:xlink","http://www.w3.org/1999/xlink"),c.appendChild(h),h.appendChild(g("rect",{fill:b.colorDark,width:"1",height:"1",id:"template"}));for(var i=0;d>i;i++)for(var j=0;d>j;j++)if(a.isDark(i,j)){var k=g("use",{x:String(i),y:String(j)});k.setAttributeNS("http://www.w3.org/1999/xlink","href","#template"),h.appendChild(k)}},a.prototype.clear=function(){for(;this._el.hasChildNodes();)this._el.removeChild(this._el.lastChild)},a}(),p="svg"===document.documentElement.tagName.toLowerCase(),q=p?o:m()?function(){function a(){this._elImage.src=this._elCanvas.toDataURL("image/png"),this._elImage.style.display="block",this._elCanvas.style.display="none"}function d(a,b){var c=this;if(c._fFail=b,c._fSuccess=a,null===c._bSupportDataURI){var d=document.createElement("img"),e=function(){c._bSupportDataURI=!1,c._fFail&&_fFail.call(c)},f=function(){c._bSupportDataURI=!0,c._fSuccess&&c._fSuccess.call(c)};return d.onabort=e,d.onerror=e,d.onload=f,d.src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",void 0}c._bSupportDataURI===!0&&c._fSuccess?c._fSuccess.call(c):c._bSupportDataURI===!1&&c._fFail&&c._fFail.call(c)}if(this._android&&this._android<=2.1){var b=1/window.devicePixelRatio,c=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(a,d,e,f,g,h,i,j){if("nodeName"in a&&/img/i.test(a.nodeName))for(var l=arguments.length-1;l>=1;l--)arguments[l]=arguments[l]*b;else"undefined"==typeof j&&(arguments[1]*=b,arguments[2]*=b,arguments[3]*=b,arguments[4]*=b);c.apply(this,arguments)}}var e=function(a,b){this._bIsPainted=!1,this._android=n(),this._htOption=b,this._elCanvas=document.createElement("canvas"),this._elCanvas.width=b.width,this._elCanvas.height=b.height,a.appendChild(this._elCanvas),this._el=a,this._oContext=this._elCanvas.getContext("2d"),this._bIsPainted=!1,this._elImage=document.createElement("img"),this._elImage.style.display="none",this._el.appendChild(this._elImage),this._bSupportDataURI=null};return e.prototype.draw=function(a){var b=this._elImage,c=this._oContext,d=this._htOption,e=a.getModuleCount(),f=d.width/e,g=d.height/e,h=Math.round(f),i=Math.round(g);b.style.display="none",this.clear();for(var j=0;e>j;j++)for(var k=0;e>k;k++){var l=a.isDark(j,k),m=k*f,n=j*g;c.strokeStyle=l?d.colorDark:d.colorLight,c.lineWidth=1,c.fillStyle=l?d.colorDark:d.colorLight,c.fillRect(m,n,f,g),c.strokeRect(Math.floor(m)+.5,Math.floor(n)+.5,h,i),c.strokeRect(Math.ceil(m)-.5,Math.ceil(n)-.5,h,i)}this._bIsPainted=!0},e.prototype.makeImage=function(){this._bIsPainted&&d.call(this,a)},e.prototype.isPainted=function(){return this._bIsPainted},e.prototype.clear=function(){this._oContext.clearRect(0,0,this._elCanvas.width,this._elCanvas.height),this._bIsPainted=!1},e.prototype.round=function(a){return a?Math.floor(1e3*a)/1e3:a},e}():function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){for(var b=this._htOption,c=this._el,d=a.getModuleCount(),e=Math.floor(b.width/d),f=Math.floor(b.height/d),g=['<table style="border:0;border-collapse:collapse;">'],h=0;d>h;h++){g.push("<tr>");for(var i=0;d>i;i++)g.push('<td style="border:0;border-collapse:collapse;padding:0;margin:0;width:'+e+"px;height:"+f+"px;background-color:"+(a.isDark(h,i)?b.colorDark:b.colorLight)+';"></td>');g.push("</tr>")}g.push("</table>"),c.innerHTML=g.join("");var j=c.childNodes[0],k=(b.width-j.offsetWidth)/2,l=(b.height-j.offsetHeight)/2;k>0&&l>0&&(j.style.margin=l+"px "+k+"px")},a.prototype.clear=function(){this._el.innerHTML=""},a}();QRCode=function(a,b){if(this._htOption={width:256,height:256,typeNumber:4,colorDark:"#000000",colorLight:"#ffffff",correctLevel:d.H},"string"==typeof b&&(b={text:b}),b)for(var c in b)this._htOption[c]=b[c];"string"==typeof a&&(a=document.getElementById(a)),this._android=n(),this._el=a,this._oQRCode=null,this._oDrawing=new q(this._el,this._htOption),this._htOption.text&&this.makeCode(this._htOption.text)},QRCode.prototype.makeCode=function(a){this._oQRCode=new b(r(a,this._htOption.correctLevel),this._htOption.correctLevel),this._oQRCode.addData(a),this._oQRCode.make(),this._el.title=a,this._oDrawing.draw(this._oQRCode),this.makeImage()},QRCode.prototype.makeImage=function(){"function"==typeof this._oDrawing.makeImage&&(!this._android||this._android>=3)&&this._oDrawing.makeImage()},QRCode.prototype.clear=function(){this._oDrawing.clear()},QRCode.CorrectLevel=d}();
+</script>
+
+<style>
+  :root{
+    --ink:#101823;
+    --panel:#182432;
+    --panel-2:#1f2e3f;
+    --line:#33465c;
+    --paper:#EFEAE0;
+    --paper-2:#e4ded0;
+    --teal:#2FB6A5;
+    --teal-dim:#1f8577;
+    --amber:#E2A33B;
+    --red:#C1443C;
+    --ink-soft:#7f8fa3;
+    --text:#EDEFF2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    min-height:100vh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  [hidden]{display:none !important;}
+
+  /* ---------- generic layout ---------- */
+  .screen{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:24px 16px 40px;
+  }
+  .topbar{
+    width:100%;
+    max-width:1000px;
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:24px;
+  }
+  .topbar .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+  }
+  .topbar .module{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--teal);
+    letter-spacing:.04em;
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:4px;
+    width:100%;
+    max-width:640px;
+    padding:28px 24px;
+  }
+  h1.title{
+    font-size:clamp(22px,5vw,34px);
+    margin:0 0 6px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  p.sub{
+    color:var(--ink-soft);
+    margin:0 0 22px;
+    font-size:15px;
+    line-height:1.5;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--teal);
+    color:#08201c;
+    border:none;
+    border-radius:3px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:16px;
+    padding:14px 22px;
+    cursor:pointer;
+    width:100%;
+    transition:transform .08s ease, background .15s ease;
+  }
+  .btn:hover{background:#3fcdba;}
+  .btn:active{transform:scale(.98);}
+  .btn.secondary{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--line);
+  }
+  .btn.secondary:hover{background:var(--panel-2);}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
+  .btn-row{display:flex;gap:10px;width:100%;margin-top:10px;}
+
+  .field{width:100%;margin-bottom:16px;}
+  .field label{
+    display:block;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:.03em;
+  }
+  .field input{
+    width:100%;
+    background:var(--ink);
+    border:1px solid var(--line);
+    color:var(--text);
+    border-radius:3px;
+    padding:14px;
+    font-size:18px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .field input:focus{outline:2px solid var(--teal);border-color:var(--teal);}
+  .error-msg{
+    color:var(--red);
+    font-size:14px;
+    margin-top:-4px;
+    margin-bottom:14px;
+    min-height:18px;
+  }
+
+  /* ---------- role choice ---------- */
+  .role-grid{display:flex;flex-direction:column;gap:14px;width:100%;max-width:520px;}
+  .role-btn{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-left:4px solid var(--teal);
+    border-radius:3px;
+    padding:20px;
+    text-align:left;
+    cursor:pointer;
+    color:var(--text);
+  }
+  .role-btn:hover{background:var(--panel-2);}
+  .role-btn .rt{font-weight:700;font-size:18px;margin-bottom:4px;}
+  .role-btn .rd{color:var(--ink-soft);font-size:14px;}
+
+  /* ---------- host: pin display ---------- */
+  .pin-tag{
+    display:inline-block;
+    border:1px dashed var(--amber);
+    color:var(--amber);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    padding:4px 10px;
+    border-radius:2px;
+    letter-spacing:.06em;
+    margin-bottom:18px;
+  }
+  .pin-huge{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:600;
+    font-size:clamp(48px,14vw,120px);
+    letter-spacing:.12em;
+    color:var(--text);
+    line-height:1;
+    text-shadow:0 0 30px rgba(47,182,165,.35);
+    margin:6px 0 4px;
+  }
+  .join-url{color:var(--ink-soft);font-size:15px;margin-bottom:22px;}
+  .waiting-count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:20px;
+    color:var(--teal);
+    margin-bottom:24px;
+  }
+
+  /* ---------- question display (host) ---------- */
+  .qnum{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);font-size:13px;margin-bottom:10px;letter-spacing:.04em;}
+  .qprompt{font-size:clamp(20px,3.6vw,28px);font-weight:600;line-height:1.3;margin-bottom:22px;}
+  .opt-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    font-size:16px;
+  }
+  .opt-row.is-correct{border-color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal);}
+  .opt-bar-wrap{flex:1;margin-left:16px;height:10px;background:var(--ink);border-radius:5px;overflow:hidden;}
+  .opt-bar{height:100%;background:var(--teal);width:0%;transition:width .5s ease;}
+  .opt-count{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);font-size:13px;margin-left:12px;min-width:34px;text-align:right;}
+
+  .guess-stats{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .stat-box{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:12px 16px;
+    flex:1;
+    min-width:120px;
+  }
+  .stat-box .sl{font-size:11px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.05em;}
+  .stat-box .sv{font-family:'IBM Plex Mono',monospace;font-size:22px;color:var(--teal);margin-top:2px;}
+
+  .fact-box{
+    border-left:3px solid var(--amber);
+    background:var(--panel-2);
+    padding:14px 16px;
+    border-radius:0 3px 3px 0;
+    font-size:14px;
+    line-height:1.55;
+    color:var(--text);
+    margin-top:6px;
+  }
+  .fact-box .fl{color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;display:block;margin-bottom:6px;}
+
+  .answered-count{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--ink-soft);
+    font-size:14px;
+    margin-bottom:18px;
+  }
+
+  /* ---------- leaderboard ---------- */
+  .lb-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 14px;
+    border-bottom:1px solid var(--line);
+    font-size:16px;
+  }
+  .lb-row:first-child{color:var(--amber);font-weight:700;}
+  .lb-rank{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);width:28px;}
+  .lb-name{flex:1;margin-left:8px;}
+  .lb-score{font-family:'IBM Plex Mono',monospace;color:var(--teal);}
+
+  /* ---------- player screens ---------- */
+  .player-shell{max-width:460px;}
+  .status-pill{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:5px 12px;
+    margin-bottom:18px;
+  }
+  .mcq-btn{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:var(--paper);
+    color:var(--ink);
+    border:none;
+    border-left:5px solid var(--panel-2);
+    border-radius:3px;
+    padding:18px 16px;
+    margin-bottom:12px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:17px;
+    cursor:pointer;
+  }
+  .mcq-btn:active{background:var(--paper-2);}
+  .mcq-btn.chosen{border-left-color:var(--teal);background:#dff5f1;}
+  .mcq-btn.correct-reveal{border-left-color:var(--teal);background:#cdf0e8;}
+  .mcq-btn.wrong-reveal{border-left-color:var(--red);background:#f3d9d6;opacity:.85;}
+  .mcq-btn:disabled{cursor:default;}
+
+  .guess-input-row{display:flex;gap:10px;margin-bottom:14px;}
+  .guess-input-row input{
+    flex:1;
+    font-size:22px;
+    padding:16px;
+    border-radius:3px;
+    border:1px solid var(--line);
+    background:var(--ink);
+    color:var(--text);
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .unit-label{
+    display:flex;align-items:center;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+  }
+
+  .result-banner{
+    border-radius:3px;
+    padding:16px;
+    margin-top:8px;
+    margin-bottom:16px;
+    font-size:15px;
+    line-height:1.5;
+  }
+  .result-banner.good{background:#173a34;border:1px solid var(--teal);}
+  .result-banner.bad{background:#3a1e1c;border:1px solid var(--red);}
+  .result-banner .rb-score{font-family:'IBM Plex Mono',monospace;font-size:26px;margin-bottom:4px;display:block;}
+
+  .score-strip{
+    display:flex;justify-content:space-between;align-items:center;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:3px;
+    padding:12px 16px;margin-bottom:20px;font-family:'IBM Plex Mono',monospace;font-size:14px;
+  }
+  .score-strip .val{color:var(--teal);font-size:20px;}
+
+  footer.credit{
+    color:var(--ink-soft);
+    font-size:11px;
+    font-family:'IBM Plex Mono',monospace;
+    margin-top:36px;
+    text-align:center;
+  }
+
+  .config-warning{
+    max-width:640px;
+    background:#3a1e1c;
+    border:1px solid var(--red);
+    color:#f5d6d3;
+    padding:16px;
+    border-radius:3px;
+    margin-bottom:24px;
+    font-size:14px;
+    line-height:1.5;
+  }
+</style>
+</head>
+<body>
+
+<div id="configWarning" class="config-warning" hidden>
+  <strong>Setup needed:</strong> this file needs a free Firebase Realtime Database connected before it can run live sessions.
+  Open the file and fill in the <span class="mono">FIREBASE_CONFIG</span> object near the top of the &lt;script&gt; section.
+  Ask Claude for the step-by-step setup if you don't have this yet.
+</div>
+
+<!-- ============ ROLE CHOICE ============ -->
+<div id="view-role" class="screen">
+  <div class="topbar" style="max-width:520px;">
+    <span class="tag mono">AP0551 · DNA PROFILING</span>
+    <span class="module mono">NDNAD LIVE</span>
+  </div>
+  <h1 class="title">NDNAD Live</h1>
+  <p class="sub">A quiz and estimation game built from the FIND Strategy Board's National DNA Database Annual Report (2024/25).</p>
+  <div class="role-grid">
+    <button class="role-btn" id="chooseHost">
+      <div class="rt">I'm the lecturer — display on the big screen</div>
+      <div class="rd">Runs the session, shows live results to the room</div>
+    </button>
+    <button class="role-btn" id="choosePlayer">
+      <div class="rt">I'm a student — join on my phone</div>
+      <div class="rd">Enter the session PIN shown at the front</div>
+    </button>
+  </div>
+  <footer class="credit">Data: FIND Strategy Board, National DNA Database Annual Report 2024–25</footer>
+</div>
+
+<!-- ============ HOST: SETUP ============ -->
+<div id="view-host-setup" class="screen" hidden>
+  <div class="card" style="text-align:center;">
+    <h1 class="title">Start a live session</h1>
+    <p class="sub">This generates a PIN your students will use to join on their phones.</p>
+    <button class="btn" id="startSessionBtn">Start new session</button>
+    <button class="btn secondary" style="margin-top:10px;" id="backFromHostSetup">Back</button>
+  </div>
+</div>
+
+<!-- ============ HOST: LOBBY ============ -->
+<div id="view-host-lobby" class="screen" hidden>
+  <div class="topbar">
+    <span class="tag mono">AP0551 · NDNAD LIVE</span>
+    <span class="module mono" id="hostLobbyQCount"></span>
+  </div>
+  <div style="text-align:center;">
+    <div class="pin-tag">SESSION PIN</div>
+    <div class="pin-huge mono" id="lobbyPin">----</div>
+    <div class="join-url">Students: scan the code below, or open this page → "I'm a student" → enter the PIN</div>
+    <div id="qrWrap" style="display:inline-block;background:#EFEAE0;padding:14px;border-radius:6px;margin:8px 0 18px;"></div>
+    <div class="join-url mono" id="joinUrlText" style="word-break:break-all;font-size:12px;"></div>
+    <div class="waiting-count" id="lobbyPlayerCount">0 students joined</div>
+    <button class="btn" id="startQuizBtn" style="max-width:320px;">Start quiz</button>
+  </div>
+</div>
+
+<!-- ============ HOST: LIVE QUESTION ============ -->
+<div id="view-host-live" class="screen" hidden>
+  <div class="topbar">
+    <span class="tag mono">SESSION <span id="hostPinTag"></span></span>
+    <span class="module mono" id="hostQProgress"></span>
+  </div>
+  <div class="card" style="max-width:760px;">
+    <div class="qnum mono" id="hostQType"></div>
+    <div class="qprompt" id="hostPrompt"></div>
+
+    <div id="hostMcqArea"></div>
+    <div id="hostGuessArea" hidden>
+      <div class="guess-stats">
+        <div class="stat-box"><div class="sl">Responses</div><div class="sv" id="gsCount">0</div></div>
+        <div class="stat-box"><div class="sl">Average guess</div><div class="sv" id="gsAvg">—</div></div>
+        <div class="stat-box"><div class="sl">Closest guess</div><div class="sv" id="gsClosest">—</div></div>
+      </div>
+    </div>
+
+    <div class="answered-count mono" id="hostAnsweredCount">0 responses</div>
+
+    <div id="hostRevealArea" hidden>
+      <div class="fact-box">
+        <span class="fl">TRUE ANSWER</span>
+        <span id="hostRevealAnswer"></span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn secondary" id="hostRevealBtn">Reveal answer</button>
+      <button class="btn" id="hostNextBtn">Next question</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HOST: FINAL LEADERBOARD ============ -->
+<div id="view-host-final" class="screen" hidden>
+  <div class="topbar">
+    <span class="tag mono">SESSION <span id="hostFinalPinTag"></span></span>
+    <span class="module mono">FINAL RESULTS</span>
+  </div>
+  <div class="card" style="max-width:560px;">
+    <h1 class="title" style="margin-bottom:18px;">Leaderboard</h1>
+    <div id="finalLeaderboard"></div>
+  </div>
+</div>
+
+<!-- ============ PLAYER: JOIN ============ -->
+<div id="view-player-join" class="screen" hidden>
+  <div class="card player-shell">
+    <h1 class="title">Join session</h1>
+    <p class="sub">Ask your lecturer for the 4-digit PIN on screen.</p>
+    <div class="field">
+      <label for="joinPinInput">SESSION PIN</label>
+      <input id="joinPinInput" inputmode="numeric" maxlength="4" placeholder="e.g. 4821">
+    </div>
+    <div class="field">
+      <label for="joinNameInput">YOUR NAME OR NICKNAME</label>
+      <input id="joinNameInput" maxlength="20" placeholder="e.g. Ada">
+    </div>
+    <div class="error-msg" id="joinError"></div>
+    <button class="btn" id="joinBtn">Join</button>
+    <button class="btn secondary" style="margin-top:10px;" id="backFromPlayerJoin">Back</button>
+  </div>
+</div>
+
+<!-- ============ PLAYER: LOBBY (waiting) ============ -->
+<div id="view-player-lobby" class="screen" hidden>
+  <div class="card player-shell" style="text-align:center;">
+    <div class="status-pill">JOINED AS <span id="playerNameTag" class="mono"></span></div>
+    <h1 class="title">You're in</h1>
+    <p class="sub">Waiting for your lecturer to start the quiz…</p>
+  </div>
+</div>
+
+<!-- ============ PLAYER: LIVE QUESTION ============ -->
+<div id="view-player-live" class="screen" hidden>
+  <div class="card player-shell">
+    <div class="score-strip">
+      <span>SCORE</span>
+      <span class="val mono" id="playerScoreVal">0</span>
+    </div>
+    <div class="qnum mono" id="playerQProgress"></div>
+    <div class="qprompt" id="playerPrompt" style="font-size:20px;"></div>
+
+    <div id="playerMcqArea"></div>
+
+    <div id="playerGuessArea" hidden>
+      <div class="guess-input-row">
+        <input id="guessValueInput" type="number" inputmode="decimal" placeholder="Your guess">
+        <div class="unit-label" id="guessUnitLabel"></div>
+      </div>
+      <button class="btn" id="submitGuessBtn">Lock in answer</button>
+    </div>
+
+    <div id="playerLockedMsg" class="status-pill" hidden>Answer locked in — waiting for reveal…</div>
+    <div id="playerResultArea"></div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   1. FIREBASE CONFIG — fill this in with your own free Firebase project.
+      console.firebase.google.com → create project → Realtime Database
+      → copy the config object it gives you and paste it below.
+   ========================================================================= */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAM9tE6IqqmpBGF9gRjfzCUEAOng9_wFMU",
+  databaseURL: "https://ap0551-ndnad-report-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "ap0551-ndnad-report"
+};
+
+/* Optional: if the QR code ever shows a broken/unreachable link, paste the exact URL
+   this file is hosted at on Blackboard here (e.g. the address bar text once you've
+   clicked the file link in your course), and the QR will always use this instead of
+   trying to detect it automatically. Leave blank to auto-detect. */
+const DEPLOY_URL = "";
+
+/* =========================================================================
+   2. QUESTION SET — from the FIND Strategy Board NDNAD Annual Report 2024/25
+   ========================================================================= */
+const QUESTIONS = [
+  {
+    type: "mcq",
+    prompt: "In what year was the National DNA Database (NDNAD) established?",
+    options: ["1988", "1995", "2001", "2012"],
+    correctIndex: 1,
+    fact: "NDNAD was established in 1995. Between April 2001 and March 2025 it produced 843,494 matches to unsolved crimes."
+  },
+  {
+    type: "guess",
+    prompt: "As of 31 March 2025, how many subject DNA profile records did NDNAD hold?",
+    unit: "records",
+    correctValue: 7404888,
+    fact: "NDNAD held 7,404,888 subject profile records — an estimated 6,151,373 individuals once duplicates are accounted for."
+  },
+  {
+    type: "mcq",
+    prompt: "Which government body has governed the NDNAD since 2012?",
+    options: ["Home Office", "Forensic Science Regulator", "College of Policing", "National Crime Agency"],
+    correctIndex: 0,
+    fact: "The Home Office has governed NDNAD since 2012, working alongside the FIND Strategy Board and the Forensic Science Regulator."
+  },
+  {
+    type: "guess",
+    prompt: "In 2024/25, what was the match rate for a crime scene DNA profile loaded onto NDNAD — the % chance it matched a subject already on the database?",
+    unit: "%",
+    correctValue: 65.7,
+    fact: "The 2024/25 match rate was 65.7%. This excludes crime-scene-to-crime-scene matches."
+  },
+  {
+    type: "mcq",
+    prompt: "Which offence type produced the most routine crime-scene-to-subject matches in 2024/25?",
+    options: ["Burglary", "Vehicle crime", "Drugs", "Violent crime"],
+    correctIndex: 0,
+    fact: "Burglary (including aggravated) produced 8,562 matches in 2024/25 — far more than any other offence type, out of 20,410 routine matches in total."
+  },
+  {
+    type: "guess",
+    prompt: "Approximately what percentage of subject profile records on NDNAD are estimated to be duplicates of someone already sampled?",
+    unit: "%",
+    correctValue: 17,
+    fact: "Around 17% of subject profile records are duplicates — the same person sampled more than once, sometimes under different names."
+  },
+  {
+    type: "mcq",
+    prompt: "What is the age of criminal responsibility in England and Wales — the age below which almost no one should appear on NDNAD?",
+    options: ["8", "10", "12", "16"],
+    correctIndex: 1,
+    fact: "The age of criminal responsibility is 10. There were 93 profiles from children under 10 on NDNAD, all loaded from 'vulnerable persons' samples with specific consent and authorisation."
+  },
+  {
+    type: "guess",
+    prompt: "Between April 2001 and March 2025, how many matches to unsolved crimes has NDNAD produced in total?",
+    unit: "matches",
+    correctValue: 843494,
+    fact: "843,494 matches over that period — an average of about 35,146 per year."
+  },
+  {
+    type: "mcq",
+    prompt: "To be routinely loaded onto NDNAD, a crime scene DNA profile must have at minimum...?",
+    options: [
+      "A full 16-number DNA-17 profile",
+      "Four pairs of numbers plus a sex marker",
+      "A named suspect already identified",
+      "Two independent samples from the scene"
+    ],
+    correctIndex: 1,
+    fact: "A crime scene profile needs at least four pairs of numbers plus a sex marker to be routinely loaded. Profiles below this threshold can still be searched non-routinely."
+  },
+  {
+    type: "guess",
+    prompt: "As of 31 March 2025, how many crime scene DNA profiles on NDNAD were still unmatched to any subject?",
+    unit: "profiles",
+    correctValue: 220535,
+    fact: "220,535 crime scene profiles remained unmatched — offences that could still be solved if the perpetrator's DNA is ever added to NDNAD."
+  },
+  {
+    type: "mcq",
+    prompt: "Which UK nation holds the largest number of subject profile records on NDNAD?",
+    options: ["England", "Scotland", "Wales", "Northern Ireland"],
+    correctIndex: 0,
+    fact: "England holds 6,307,442 subject profile records, by far the largest share of the UK total of 7,404,888."
+  },
+  {
+    type: "guess",
+    prompt: "How many new subject DNA profile records were loaded onto NDNAD during 2024/25?",
+    unit: "records",
+    correctValue: 335933,
+    fact: "335,933 new subject profile records were loaded in 2024/25, alongside 22,997 new crime scene profile records."
+  }
+];
+
+/* =========================================================================
+   3. APP LOGIC
+   ========================================================================= */
+let db = null;
+let firebaseReady = false;
+try {
+  if (FIREBASE_CONFIG.apiKey && !FIREBASE_CONFIG.apiKey.startsWith("PASTE_")) {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.database();
+    firebaseReady = true;
+  }
+} catch (e) { firebaseReady = false; }
+
+if (!firebaseReady) document.getElementById('configWarning').hidden = false;
+
+const $ = (id) => document.getElementById(id);
+function show(id) {
+  ["view-role","view-host-setup","view-host-lobby","view-host-live","view-host-final",
+   "view-player-join","view-player-lobby","view-player-live"].forEach(v => $(v).hidden = (v !== id));
+}
+
+const state = { pin:null, role:null, playerId:null, playerName:null, playerScore:0,
+                currentIdx:-1, hasAnsweredThisQ:false, questionStartedAt:null };
+
+function randPin(){ return String(Math.floor(1000 + Math.random()*9000)); }
+
+/* ---------- role choice ---------- */
+$('chooseHost').onclick = () => show('view-host-setup');
+$('choosePlayer').onclick = () => show('view-player-join');
+$('backFromHostSetup').onclick = () => show('view-role');
+$('backFromPlayerJoin').onclick = () => show('view-role');
+
+/* ---------- deep link: ?pin=1234 jumps straight to join screen, prefilled ---------- */
+(function handleDeepLink(){
+  const params = new URLSearchParams(window.location.search);
+  const pinParam = params.get('pin');
+  if (pinParam && /^\d{4}$/.test(pinParam)) {
+    show('view-player-join');
+    $('joinPinInput').value = pinParam;
+    setTimeout(() => $('joinNameInput').focus(), 50);
+  }
+})();
+
+/* ---------- HOST: create session ---------- */
+$('startSessionBtn').onclick = () => {
+  if (!firebaseReady) { alert("Firebase isn't configured yet — see the banner at the top of the page."); return; }
+  const pin = randPin();
+  state.pin = pin; state.role = 'host';
+  db.ref('sessions/'+pin).set({
+    createdAt: Date.now(),
+    currentQuestion: -1,
+    currentQuestionStartedAt: null,
+    revealed: false,
+    totalQuestions: QUESTIONS.length
+  });
+  $('lobbyPin').textContent = pin;
+  $('hostLobbyQCount').textContent = QUESTIONS.length + ' QUESTIONS';
+  show('view-host-lobby');
+  renderJoinQr(pin);
+  listenLobbyPlayers(pin);
+  listenSessionState(pin);
+};
+
+function baseUrl(){
+  if (DEPLOY_URL.trim()) return DEPLOY_URL.trim().split('?')[0].split('#')[0];
+  const origin = window.location.origin;
+  const usable = origin && origin !== 'null' && /^https?:\/\//.test(origin);
+  if (!usable) return null; // file:// or sandboxed origin — QR would be unreachable from a phone
+  return origin + window.location.pathname;
+}
+
+function renderJoinQr(pin){
+  const base = baseUrl();
+  const wrap = $('qrWrap');
+  wrap.innerHTML = '';
+  if (!base) {
+    $('joinUrlText').textContent = '';
+    wrap.innerHTML = '<div style="color:#101823;font-size:13px;padding:20px;max-width:220px;">'+
+      'No QR code yet — this page is currently open from a local file, which a phone can\'t reach. '+
+      'Once this file is uploaded to Blackboard, open it from there and the QR code will work. '+
+      'Until then, students can join by typing the PIN above.</div>';
+    return;
+  }
+  const joinUrl = base + '?pin=' + pin;
+  $('joinUrlText').textContent = joinUrl;
+  try {
+    new QRCode(wrap, { text: joinUrl, width: 220, height: 220, colorDark: '#101823', colorLight: '#EFEAE0' });
+  } catch (e) {
+    wrap.innerHTML = '<div style="color:#101823;font-size:13px;padding:20px;">QR unavailable — use the PIN above.</div>';
+  }
+}
+
+function listenLobbyPlayers(pin){
+  db.ref('sessions/'+pin+'/players').on('value', snap => {
+    const n = snap.exists() ? Object.keys(snap.val()).length : 0;
+    $('lobbyPlayerCount').textContent = n + (n===1 ? ' student joined' : ' students joined');
+  });
+}
+
+$('startQuizBtn').onclick = () => {
+  advanceToQuestion(0);
+};
+
+function advanceToQuestion(idx){
+  db.ref('sessions/'+state.pin).update({
+    currentQuestion: idx,
+    currentQuestionStartedAt: Date.now(),
+    revealed: false
+  });
+}
+
+$('hostNextBtn').onclick = () => {
+  const next = state.currentIdx + 1;
+  if (next >= QUESTIONS.length) {
+    showFinalLeaderboard();
+  } else {
+    advanceToQuestion(next);
+  }
+};
+
+$('hostRevealBtn').onclick = () => {
+  db.ref('sessions/'+state.pin).update({ revealed: true });
+};
+
+function listenSessionState(pin){
+  db.ref('sessions/'+pin).on('value', snap => {
+    const data = snap.val();
+    if (!data) return;
+    if (data.currentQuestion === -1) return; // still in lobby
+    state.currentIdx = data.currentQuestion;
+    renderHostQuestion(data);
+  });
+}
+
+function renderHostQuestion(sessionData){
+  const idx = sessionData.currentQuestion;
+  const q = QUESTIONS[idx];
+  show('view-host-live');
+  $('hostPinTag').textContent = state.pin;
+  $('hostQProgress').textContent = 'QUESTION '+(idx+1)+' OF '+QUESTIONS.length;
+  $('hostQType').textContent = q.type === 'mcq' ? 'MULTIPLE CHOICE' : 'GUESS THE NUMBER';
+  $('hostPrompt').textContent = q.prompt;
+  $('hostRevealArea').hidden = !sessionData.revealed;
+  $('hostRevealBtn').disabled = sessionData.revealed;
+
+  if (q.type === 'mcq') {
+    $('hostMcqArea').hidden = false;
+    $('hostGuessArea').hidden = true;
+  } else {
+    $('hostMcqArea').hidden = true;
+    $('hostGuessArea').hidden = false;
+  }
+
+  db.ref('answers/'+state.pin+'/'+idx).off();
+  db.ref('answers/'+state.pin+'/'+idx).on('value', snap => {
+    const answers = snap.val() || {};
+    const vals = Object.values(answers);
+    $('hostAnsweredCount').textContent = vals.length + ' response' + (vals.length===1?'':'s');
+
+    if (q.type === 'mcq') {
+      const counts = new Array(q.options.length).fill(0);
+      vals.forEach(a => { if (typeof a.choice === 'number') counts[a.choice]++; });
+      const max = Math.max(1, ...counts);
+      $('hostMcqArea').innerHTML = q.options.map((opt,i) => {
+        const pct = Math.round((counts[i]/max)*100);
+        const correctClass = (sessionData.revealed && i===q.correctIndex) ? ' is-correct' : '';
+        return '<div class="opt-row'+correctClass+'">'+
+          '<span>'+opt+(sessionData.revealed && i===q.correctIndex ? '  ✓' : '')+'</span>'+
+          '<div class="opt-bar-wrap"><div class="opt-bar" style="width:'+pct+'%"></div></div>'+
+          '<span class="opt-count mono">'+counts[i]+'</span></div>';
+      }).join('');
+      if (sessionData.revealed) $('hostRevealAnswer').textContent = q.fact;
+    } else {
+      const nums = vals.map(a => a.value).filter(v => typeof v === 'number');
+      $('gsCount').textContent = nums.length;
+      if (nums.length) {
+        const avg = nums.reduce((a,b)=>a+b,0)/nums.length;
+        $('gsAvg').textContent = formatNum(avg);
+        const closest = nums.reduce((best,n) => Math.abs(n-q.correctValue) < Math.abs(best-q.correctValue) ? n : best, nums[0]);
+        $('gsClosest').textContent = formatNum(closest);
+      } else {
+        $('gsAvg').textContent = '—';
+        $('gsClosest').textContent = '—';
+      }
+      if (sessionData.revealed) {
+        $('hostRevealAnswer').textContent = formatNum(q.correctValue) + (q.unit ? ' '+q.unit : '') + '. ' + q.fact;
+      }
+    }
+  });
+}
+
+function formatNum(n){
+  if (Math.abs(n) < 100) return (Math.round(n*10)/10).toString();
+  return Math.round(n).toLocaleString('en-GB');
+}
+
+function showFinalLeaderboard(){
+  db.ref('sessions/'+state.pin+'/players').once('value').then(snap => {
+    const players = snap.val() || {};
+    const rows = Object.values(players).sort((a,b) => (b.score||0)-(a.score||0)).slice(0,10);
+    $('hostFinalPinTag').textContent = state.pin;
+    $('finalLeaderboard').innerHTML = rows.length ? rows.map((p,i) =>
+      '<div class="lb-row"><span class="lb-rank mono">'+(i+1)+'</span>'+
+      '<span class="lb-name">'+escapeHtml(p.name||'Anonymous')+'</span>'+
+      '<span class="lb-score mono">'+(p.score||0)+'</span></div>'
+    ).join('') : '<p class="sub">No students joined this session.</p>';
+    show('view-host-final');
+  });
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ---------- PLAYER: join ---------- */
+$('joinBtn').onclick = () => {
+  if (!firebaseReady) { $('joinError').textContent = "This session isn't configured yet — ask your lecturer."; return; }
+  const pin = $('joinPinInput').value.trim();
+  const name = $('joinNameInput').value.trim();
+  $('joinError').textContent = '';
+  if (!/^\d{4}$/.test(pin)) { $('joinError').textContent = 'Enter the 4-digit PIN.'; return; }
+  if (!name) { $('joinError').textContent = 'Enter a name or nickname.'; return; }
+
+  db.ref('sessions/'+pin).once('value').then(snap => {
+    if (!snap.exists()) { $('joinError').textContent = 'Session not found — check the PIN with your lecturer.'; return; }
+    state.pin = pin; state.role = 'player'; state.playerName = name; state.playerScore = 0;
+    const ref = db.ref('sessions/'+pin+'/players').push({ name: name, score: 0 });
+    state.playerId = ref.key;
+    $('playerNameTag').textContent = name;
+    show('view-player-lobby');
+    listenPlayerSession(pin);
+  });
+};
+
+function listenPlayerSession(pin){
+  db.ref('sessions/'+pin).on('value', snap => {
+    const data = snap.val();
+    if (!data) return;
+    if (data.currentQuestion === -1) { show('view-player-lobby'); return; }
+    if (data.currentQuestion !== state.currentIdx) {
+      state.currentIdx = data.currentQuestion;
+      state.hasAnsweredThisQ = false;
+      state.questionStartedAt = data.currentQuestionStartedAt;
+      renderPlayerQuestion(data);
+    }
+    if (data.revealed) {
+      revealPlayerResult(data);
+    }
+  });
+}
+
+function renderPlayerQuestion(sessionData){
+  const idx = sessionData.currentQuestion;
+  const q = QUESTIONS[idx];
+  show('view-player-live');
+  $('playerQProgress').textContent = 'QUESTION '+(idx+1)+' OF '+QUESTIONS.length;
+  $('playerPrompt').textContent = q.prompt;
+  $('playerScoreVal').textContent = state.playerScore;
+  $('playerLockedMsg').hidden = true;
+  $('playerResultArea').innerHTML = '';
+
+  if (q.type === 'mcq') {
+    $('playerMcqArea').hidden = false;
+    $('playerGuessArea').hidden = true;
+    $('playerMcqArea').innerHTML = q.options.map((opt,i) =>
+      '<button class="mcq-btn" data-idx="'+i+'">'+opt+'</button>'
+    ).join('');
+    Array.from($('playerMcqArea').querySelectorAll('.mcq-btn')).forEach(btn => {
+      btn.onclick = () => submitMcqAnswer(idx, parseInt(btn.dataset.idx,10));
+    });
+  } else {
+    $('playerMcqArea').hidden = true;
+    $('playerGuessArea').hidden = false;
+    $('guessValueInput').value = '';
+    $('guessUnitLabel').textContent = q.unit || '';
+    $('submitGuessBtn').disabled = false;
+    $('submitGuessBtn').onclick = () => {
+      const v = parseFloat($('guessValueInput').value);
+      if (isNaN(v)) return;
+      submitGuessAnswer(idx, v);
+    };
+  }
+}
+
+function submitMcqAnswer(idx, choiceIdx){
+  if (state.hasAnsweredThisQ) return;
+  state.hasAnsweredThisQ = true;
+  Array.from($('playerMcqArea').querySelectorAll('.mcq-btn')).forEach(b => {
+    b.disabled = true;
+    if (parseInt(b.dataset.idx,10) === choiceIdx) b.classList.add('chosen');
+  });
+  db.ref('answers/'+state.pin+'/'+idx+'/'+state.playerId).set({
+    choice: choiceIdx, name: state.playerName, at: Date.now()
+  });
+  $('playerLockedMsg').hidden = false;
+}
+
+function submitGuessAnswer(idx, value){
+  if (state.hasAnsweredThisQ) return;
+  state.hasAnsweredThisQ = true;
+  $('submitGuessBtn').disabled = true;
+  $('guessValueInput').disabled = true;
+  db.ref('answers/'+state.pin+'/'+idx+'/'+state.playerId).set({
+    value: value, name: state.playerName, at: Date.now()
+  });
+  $('playerLockedMsg').hidden = false;
+}
+
+function revealPlayerResult(sessionData){
+  const idx = sessionData.currentQuestion;
+  const q = QUESTIONS[idx];
+  const resultArea = $('playerResultArea');
+  if (resultArea.dataset.revealedFor === String(idx)) return; // already scored this question
+  resultArea.dataset.revealedFor = String(idx);
+
+  db.ref('answers/'+state.pin+'/'+idx+'/'+state.playerId).once('value').then(snap => {
+    const ans = snap.val();
+    let pts = 0, correct = false, message = '';
+
+    if (q.type === 'mcq') {
+      if (ans && ans.choice === q.correctIndex) {
+        correct = true;
+        const elapsed = ans.at && state.questionStartedAt ? (ans.at - state.questionStartedAt)/1000 : 20;
+        pts = Math.round(500 + 500*(1 - Math.min(Math.max(elapsed,0),20)/20));
+      }
+      message = correct ? 'Correct!' : ('Not quite — the answer was: ' + q.options[q.correctIndex]);
+      Array.from($('playerMcqArea').querySelectorAll('.mcq-btn')).forEach(b => {
+        const i = parseInt(b.dataset.idx,10);
+        if (i === q.correctIndex) b.classList.add('correct-reveal');
+        else if (ans && i === ans.choice) b.classList.add('wrong-reveal');
+      });
+    } else {
+      if (ans && typeof ans.value === 'number') {
+        const err = Math.abs(ans.value - q.correctValue) / Math.max(Math.abs(q.correctValue), 1e-6);
+        pts = Math.max(0, Math.round(1000 * (1 - err)));
+        correct = pts >= 700;
+        message = 'True answer: ' + formatNum(q.correctValue) + (q.unit ? ' '+q.unit : '') + '. Your guess: ' + formatNum(ans.value) + '.';
+      } else {
+        message = 'No answer submitted. True answer: ' + formatNum(q.correctValue) + (q.unit ? ' '+q.unit : '') + '.';
+      }
+    }
+
+    state.playerScore += pts;
+    $('playerScoreVal').textContent = state.playerScore;
+    db.ref('sessions/'+state.pin+'/players/'+state.playerId+'/score').set(state.playerScore);
+
+    resultArea.innerHTML =
+      '<div class="result-banner '+(correct?'good':'bad')+'">'+
+      '<span class="rb-score mono">+'+pts+' pts</span>'+
+      message + '<br><br>' + escapeHtml(q.fact) +
+      '</div>';
+    $('playerLockedMsg').hidden = true;
+  });
+}
+</script>
+</body>
+</html>
