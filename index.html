@@ -419,7 +419,10 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
     <span class="module mono" id="hostQProgress"></span>
   </div>
   <div class="card" style="max-width:760px;">
-    <div class="qnum mono" id="hostQType"></div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <div class="qnum mono" id="hostQType"></div>
+      <div class="qnum mono" id="hostTimer" style="font-size:22px;color:var(--teal);"></div>
+    </div>
     <div class="qprompt" id="hostPrompt"></div>
 
     <div id="hostMcqArea"></div>
@@ -494,7 +497,10 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       <span>SCORE</span>
       <span class="val mono" id="playerScoreVal">0</span>
     </div>
-    <div class="qnum mono" id="playerQProgress"></div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;">
+      <div class="qnum mono" id="playerQProgress"></div>
+      <div class="qnum mono" id="playerTimer" style="font-size:20px;color:var(--teal);"></div>
+    </div>
     <div class="qprompt" id="playerPrompt" style="font-size:20px;"></div>
 
     <div id="playerMcqArea"></div>
@@ -542,10 +548,10 @@ const QUESTIONS = [
     fact: "NDNAD was established in 1995. Between April 2001 and March 2025 it produced 843,494 matches to unsolved crimes."
   },
   {
-    type: "guess",
+    type: "mcq",
     prompt: "As of 31 March 2025, how many subject DNA profile records did NDNAD hold?",
-    unit: "records",
-    correctValue: 7404888,
+    options: ["5,404,888", "6,404,888", "7,404,888", "8,404,888"],
+    correctIndex: 2,
     fact: "NDNAD held 7,404,888 subject profile records — an estimated 6,151,373 individuals once duplicates are accounted for."
   },
   {
@@ -556,10 +562,10 @@ const QUESTIONS = [
     fact: "The Home Office has governed NDNAD since 2012, working alongside the FIND Strategy Board and the Forensic Science Regulator."
   },
   {
-    type: "guess",
+    type: "mcq",
     prompt: "In 2024/25, what was the match rate for a crime scene DNA profile loaded onto NDNAD — the % chance it matched a subject already on the database?",
-    unit: "%",
-    correctValue: 65.7,
+    options: ["45.7%", "55.7%", "65.7%", "75.7%"],
+    correctIndex: 2,
     fact: "The 2024/25 match rate was 65.7%. This excludes crime-scene-to-crime-scene matches."
   },
   {
@@ -570,10 +576,10 @@ const QUESTIONS = [
     fact: "Burglary (including aggravated) produced 8,562 matches in 2024/25 — far more than any other offence type, out of 20,410 routine matches in total."
   },
   {
-    type: "guess",
+    type: "mcq",
     prompt: "Approximately what percentage of subject profile records on NDNAD are estimated to be duplicates of someone already sampled?",
-    unit: "%",
-    correctValue: 17,
+    options: ["7%", "17%", "27%", "37%"],
+    correctIndex: 1,
     fact: "Around 17% of subject profile records are duplicates — the same person sampled more than once, sometimes under different names."
   },
   {
@@ -584,10 +590,10 @@ const QUESTIONS = [
     fact: "The age of criminal responsibility is 10. There were 93 profiles from children under 10 on NDNAD, all loaded from 'vulnerable persons' samples with specific consent and authorisation."
   },
   {
-    type: "guess",
+    type: "mcq",
     prompt: "Between April 2001 and March 2025, how many matches to unsolved crimes has NDNAD produced in total?",
-    unit: "matches",
-    correctValue: 843494,
+    options: ["343,494", "643,494", "843,494", "1,043,494"],
+    correctIndex: 2,
     fact: "843,494 matches over that period — an average of about 35,146 per year."
   },
   {
@@ -603,10 +609,10 @@ const QUESTIONS = [
     fact: "A crime scene profile needs at least four pairs of numbers plus a sex marker to be routinely loaded. Profiles below this threshold can still be searched non-routinely."
   },
   {
-    type: "guess",
+    type: "mcq",
     prompt: "As of 31 March 2025, how many crime scene DNA profiles on NDNAD were still unmatched to any subject?",
-    unit: "profiles",
-    correctValue: 220535,
+    options: ["120,535", "220,535", "320,535", "420,535"],
+    correctIndex: 1,
     fact: "220,535 crime scene profiles remained unmatched — offences that could still be solved if the perpetrator's DNA is ever added to NDNAD."
   },
   {
@@ -617,13 +623,46 @@ const QUESTIONS = [
     fact: "England holds 6,307,442 subject profile records, by far the largest share of the UK total of 7,404,888."
   },
   {
-    type: "guess",
+    type: "mcq",
     prompt: "How many new subject DNA profile records were loaded onto NDNAD during 2024/25?",
-    unit: "records",
-    correctValue: 335933,
+    options: ["135,933", "235,933", "335,933", "435,933"],
+    correctIndex: 2,
     fact: "335,933 new subject profile records were loaded in 2024/25, alongside 22,997 new crime scene profile records."
+  },
+  {
+    type: "mcq",
+    prompt: "As at 31 March 2025, how many forensic laboratories were authorised to load DNA profile records to NDNAD?",
+    options: ["5", "14", "25", "40"],
+    correctIndex: 1,
+    fact: "14 laboratories were authorised to load profile records to NDNAD, each accredited to ISO/IEC 17025 under the Forensic Science Regulator's Code of Practice."
+  },
+  {
+    type: "mcq",
+    prompt: "What is the purpose of the Centralised DNA Contamination Elimination Database (CED)?",
+    options: [
+      "To identify crime scene profiles caused by contamination rather than the actual offence",
+      "To store the DNA profiles of convicted offenders",
+      "To match crime scenes to each other across different forces",
+      "To hold fingerprint records alongside DNA profiles"
+    ],
+    correctIndex: 0,
+    fact: "The CED checks crime scene profiles against elimination profiles from police staff and others who could contaminate samples. In 2024/25, 184 crime scene profile records were deleted as confirmed contamination."
+  },
+  {
+    type: "mcq",
+    prompt: "What is a 'familial search' of NDNAD used for?",
+    options: [
+      "Finding possible relatives of an offender when there's no direct match on the database",
+      "Verifying family court paternity disputes",
+      "Matching identical twins' DNA profiles",
+      "Identifying missing persons from dental records"
+    ],
+    correctIndex: 0,
+    fact: "Familial searching looks for relatives of a perpetrator when crime scene DNA doesn't directly match anyone on NDNAD. Because of privacy, cost and staffing implications, it's reserved for the most serious crimes and needs sign-off from the Chair of the FIND Strategy Board."
   }
 ];
+
+const TIMER_SECONDS = 30;
 
 /* =========================================================================
    3. APP LOGIC
@@ -647,7 +686,8 @@ function show(id) {
 }
 
 const state = { pin:null, role:null, playerId:null, playerName:null, playerScore:0,
-                currentIdx:-1, hasAnsweredThisQ:false, questionStartedAt:null };
+                currentIdx:-1, hasAnsweredThisQ:false, questionStartedAt:null,
+                hostTimerInterval:null, playerTimerInterval:null };
 
 function randPin(){ return String(Math.floor(1000 + Math.random()*9000)); }
 
@@ -759,6 +799,18 @@ function listenSessionState(pin){
   });
 }
 
+function startHostTimer(startedAt){
+  clearInterval(state.hostTimerInterval);
+  const tick = () => {
+    const elapsed = (Date.now() - startedAt) / 1000;
+    const remaining = Math.max(0, Math.ceil(TIMER_SECONDS - elapsed));
+    $('hostTimer').textContent = remaining + 's';
+    if (remaining <= 0) clearInterval(state.hostTimerInterval);
+  };
+  tick();
+  state.hostTimerInterval = setInterval(tick, 250);
+}
+
 function renderHostQuestion(sessionData){
   const idx = sessionData.currentQuestion;
   const q = QUESTIONS[idx];
@@ -769,6 +821,13 @@ function renderHostQuestion(sessionData){
   $('hostPrompt').textContent = q.prompt;
   $('hostRevealArea').hidden = !sessionData.revealed;
   $('hostRevealBtn').disabled = sessionData.revealed;
+
+  if (sessionData.revealed) {
+    clearInterval(state.hostTimerInterval);
+    $('hostTimer').textContent = '';
+  } else if (sessionData.currentQuestionStartedAt) {
+    startHostTimer(sessionData.currentQuestionStartedAt);
+  }
 
   if (q.type === 'mcq') {
     $('hostMcqArea').hidden = false;
@@ -782,22 +841,35 @@ function renderHostQuestion(sessionData){
   db.ref('answers/'+state.pin+'/'+idx).on('value', snap => {
     const answers = snap.val() || {};
     const vals = Object.values(answers);
-    $('hostAnsweredCount').textContent = vals.length + ' response' + (vals.length===1?'':'s');
+    $('hostAnsweredCount').textContent = vals.length + ' response' + (vals.length===1?'':'s') + ' so far';
 
     if (q.type === 'mcq') {
+      if (!sessionData.revealed) {
+        // Hide the breakdown while the question is live so students can't see the trend before reveal.
+        $('hostMcqArea').innerHTML = q.options.map(opt =>
+          '<div class="opt-row"><span>'+opt+'</span></div>'
+        ).join('');
+        return;
+      }
       const counts = new Array(q.options.length).fill(0);
       vals.forEach(a => { if (typeof a.choice === 'number') counts[a.choice]++; });
       const max = Math.max(1, ...counts);
       $('hostMcqArea').innerHTML = q.options.map((opt,i) => {
         const pct = Math.round((counts[i]/max)*100);
-        const correctClass = (sessionData.revealed && i===q.correctIndex) ? ' is-correct' : '';
+        const correctClass = (i===q.correctIndex) ? ' is-correct' : '';
         return '<div class="opt-row'+correctClass+'">'+
-          '<span>'+opt+(sessionData.revealed && i===q.correctIndex ? '  ✓' : '')+'</span>'+
+          '<span>'+opt+(i===q.correctIndex ? '  ✓' : '')+'</span>'+
           '<div class="opt-bar-wrap"><div class="opt-bar" style="width:'+pct+'%"></div></div>'+
           '<span class="opt-count mono">'+counts[i]+'</span></div>';
       }).join('');
-      if (sessionData.revealed) $('hostRevealAnswer').textContent = q.fact;
+      $('hostRevealAnswer').textContent = q.fact;
     } else {
+      if (!sessionData.revealed) {
+        $('gsCount').textContent = vals.length;
+        $('gsAvg').textContent = '—';
+        $('gsClosest').textContent = '—';
+        return;
+      }
       const nums = vals.map(a => a.value).filter(v => typeof v === 'number');
       $('gsCount').textContent = nums.length;
       if (nums.length) {
@@ -809,9 +881,7 @@ function renderHostQuestion(sessionData){
         $('gsAvg').textContent = '—';
         $('gsClosest').textContent = '—';
       }
-      if (sessionData.revealed) {
-        $('hostRevealAnswer').textContent = formatNum(q.correctValue) + (q.unit ? ' '+q.unit : '') + '. ' + q.fact;
-      }
+      $('hostRevealAnswer').textContent = formatNum(q.correctValue) + (q.unit ? ' '+q.unit : '') + '. ' + q.fact;
     }
   });
 }
@@ -876,6 +946,28 @@ function listenPlayerSession(pin){
   });
 }
 
+function startPlayerTimer(startedAt){
+  clearInterval(state.playerTimerInterval);
+  const tick = () => {
+    const elapsed = (Date.now() - startedAt) / 1000;
+    const remaining = Math.max(0, Math.ceil(TIMER_SECONDS - elapsed));
+    $('playerTimer').textContent = remaining + 's';
+    if (remaining <= 0) {
+      clearInterval(state.playerTimerInterval);
+      if (!state.hasAnsweredThisQ) {
+        state.hasAnsweredThisQ = true;
+        Array.from($('playerMcqArea').querySelectorAll('.mcq-btn')).forEach(b => b.disabled = true);
+        $('submitGuessBtn').disabled = true;
+        $('guessValueInput').disabled = true;
+        $('playerLockedMsg').textContent = "Time's up — waiting for reveal…";
+        $('playerLockedMsg').hidden = false;
+      }
+    }
+  };
+  tick();
+  state.playerTimerInterval = setInterval(tick, 250);
+}
+
 function renderPlayerQuestion(sessionData){
   const idx = sessionData.currentQuestion;
   const q = QUESTIONS[idx];
@@ -883,8 +975,11 @@ function renderPlayerQuestion(sessionData){
   $('playerQProgress').textContent = 'QUESTION '+(idx+1)+' OF '+QUESTIONS.length;
   $('playerPrompt').textContent = q.prompt;
   $('playerScoreVal').textContent = state.playerScore;
+  $('playerLockedMsg').textContent = 'Answer locked in — waiting for reveal…';
   $('playerLockedMsg').hidden = true;
   $('playerResultArea').innerHTML = '';
+
+  if (sessionData.currentQuestionStartedAt) startPlayerTimer(sessionData.currentQuestionStartedAt);
 
   if (q.type === 'mcq') {
     $('playerMcqArea').hidden = false;
@@ -901,6 +996,7 @@ function renderPlayerQuestion(sessionData){
     $('guessValueInput').value = '';
     $('guessUnitLabel').textContent = q.unit || '';
     $('submitGuessBtn').disabled = false;
+    $('guessValueInput').disabled = false;
     $('submitGuessBtn').onclick = () => {
       const v = parseFloat($('guessValueInput').value);
       if (isNaN(v)) return;
@@ -938,6 +1034,8 @@ function revealPlayerResult(sessionData){
   const q = QUESTIONS[idx];
   const resultArea = $('playerResultArea');
   if (resultArea.dataset.revealedFor === String(idx)) return; // already scored this question
+  clearInterval(state.playerTimerInterval);
+  $('playerTimer').textContent = '';
   resultArea.dataset.revealedFor = String(idx);
 
   db.ref('answers/'+state.pin+'/'+idx+'/'+state.playerId).once('value').then(snap => {
